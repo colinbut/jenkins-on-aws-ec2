@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_instance" "jenkins_master" {
     ami                         = "ami-0089b31e09ac3fffc" # Amaxon Linux 2 AMI from eu-west-2 region
-    count                       = 3
+    count                       = 1
     instance_type               = "t3.medium"
     key_name                    = "MyLondonKP"
     associate_public_ip_address = true
@@ -16,7 +16,7 @@ resource "aws_instance" "jenkins_master" {
     user_data                   = templatefile("${path.cwd}/master-bootstrap.tmpl", {})
 
     tags = {
-        Name            = "Artifactory-Instance"
+        Name            = "Jenkins-Master"
         ProvisionedBy   = "Terraform"
     }
 }
@@ -32,7 +32,7 @@ resource "aws_instance" "jenkins_slave" {
     user_data                   = templatefile("${path.cwd}/slave-bootstrap.tmpl", {})
 
     tags = {
-        Name            = "Artifactory-Instance"
+        Name            = "Jenkins-Slave"
         ProvisionedBy   = "Terraform"
     }
 }

@@ -36,6 +36,14 @@ terraform plan -var-file=varfile.tfvars
  terraform apply -var-file=varfile.tfvars
  ```
 
+### Remove the changes
+
+when you're done with it, to remove the infrastructure that is provisioned, use:
+
+```bash
+terraform destroy --var-file=varfile.tfvars
+```
+
 ## Tests
 
 I have used [awspec](https://github.com/k1LoW/awspec) to build RSpec tests. Currently, requires the infrastructure to be provisioned and the tests (at the moment just one simple test) will verify that it has been provisioned correctly.

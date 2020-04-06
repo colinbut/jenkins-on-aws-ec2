@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yum update -y
-yum install java-1.8.0-openjdk -y
+yum install java-1.8.0-openjdk-devel -y
 
 # installing Docker
 amazon-linux-extras install docker
@@ -40,3 +40,7 @@ wget https://releases.hashicorp.com/packer/1.5.5/packer_1.5.5_linux_amd64.zip
 unzip packer_1.5.5_linux_amd64.zip
 mv packer /usr/local/bin/
 rm -f packer_1.5.5_linux_amd64.zip
+
+# Installing Node & NPM
+curl --silent --location https://rpm.nodesource.com/setup_10.x | bash - && \
+    yum install nodejs -y

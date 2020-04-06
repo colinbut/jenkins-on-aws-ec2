@@ -6,13 +6,20 @@ provider "aws" {
     region = "eu-west-2"
 }
 
+data "aws_security_group" "WebDMZ" {
+    filter {
+        name = "group-name"
+        values = ["WebDMZ"]
+    }
+}
+
 resource "aws_instance" "jenkins_master" {
     ami                         = "ami-0089b31e09ac3fffc" # Amaxon Linux 2 AMI from eu-west-2 region
     count                       = 1
-    instance_type               = "t3.medium"
-    key_name                    = "MyLondonKP"
+    instance_type               = var.instance_type
+    key_name                    = var.key_pair
     associate_public_ip_address = true
-    vpc_security_group_ids      = ["sg-0f89322a79aa4a404"] # ensure this Security Group has port 8081 opened
+    vpc_security_group_ids      = [data.aws_security_group.WebDMZ.id] # ensure this Security Group has port 9091 opened
     user_data                   = templatefile("${path.cwd}/master-bootstrap.tmpl", {})
 
     tags = {
@@ -25,10 +32,10 @@ resource "aws_instance" "jenkins_master" {
 resource "aws_instance" "jenkins_slave" {
     ami                         = "ami-0089b31e09ac3fffc" # Amaxon Linux 2 AMI from eu-west-2 region
     count                       = 2
-    instance_type               = "t3.medium"
-    key_name                    = "MyLondonKP"
+    instance_type               = var.instance_type
+    key_name                    = var.key_pair
     associate_public_ip_address = true
-    vpc_security_group_ids      = ["sg-0f89322a79aa4a404"] # ensure this Security Group has port 8081 opened
+    vpc_security_group_ids      = [data.aws_security_group.WebDMZ.id] # ensure this Security Group has port 9091 opened
     user_data                   = templatefile("${path.cwd}/slave-bootstrap.tmpl", {})
 
     tags = {

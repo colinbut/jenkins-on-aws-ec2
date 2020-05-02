@@ -19,6 +19,7 @@ resource "aws_instance" "jenkins_master" {
     instance_type               = var.instance_type
     key_name                    = var.key_pair
     associate_public_ip_address = true
+    iam_instance_profile        = aws_iam_instance_profile.ec2_ecr_instance_profile.name
     vpc_security_group_ids      = [data.aws_security_group.WebDMZ.id] # ensure this Security Group has port 9091 opened
     user_data                   = templatefile("${path.cwd}/master-bootstrap.tmpl", {})
 
@@ -35,6 +36,7 @@ resource "aws_instance" "jenkins_slave" {
     instance_type               = var.instance_type
     key_name                    = var.key_pair
     associate_public_ip_address = true
+    iam_instance_profile        = aws_iam_instance_profile.ec2_ecr_instance_profile.name
     vpc_security_group_ids      = [data.aws_security_group.WebDMZ.id] # ensure this Security Group has port 9091 opened
     user_data                   = templatefile("${path.cwd}/slave-bootstrap.tmpl", {})
 

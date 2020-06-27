@@ -15,8 +15,9 @@ unzip apache-maven-3.6.3-bin.zip
 mv apache-maven-3.6.3 maven && \
     mv maven /opt/maven
 rm apache-maven-3.6.3-bin.zip
-echo -e 'JAVA_HOME=/usr/lib/jvm/jre-openjdk' >> ~/.bash_profile
-echo -e 'PATH=$PATH:/opt/maven/bin/\nexport PATH' >> ~/.bash_profile
+JAVA_HOME='JAVA_HOME=/usr/lib/jvm/jre-openjdk'
+MAVEN_PATH='PATH=$PATH:/opt/maven/bin/'
+su ec2-user -c ". ~/.bash_profile; echo -e '$JAVA_HOME' >> ~/.bash_profile"
 
 # Installing Gradle
 wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /opt/
@@ -24,7 +25,8 @@ cd /opt/
 unzip gradle-5.0-bin.zip
 rm -f gradle-5.0-bin.zip
 mv gradle-5.0 gradle
-echo -e 'PATH=$PATH:/opt/gradle/bin/\nexport PATH' >> ~/.bash_profile
+GRADLE_PATH="$MAVEN_PATH:/opt/gradle/bin/\nexport PATH"
+su ec2-user -c ". ~/.bash_profile; echo -e '$GRADLE_PATH' >> ~/.bash_profile"
 
 # Installing Ansible
 amazon-linux-extras install ansible2 -y

@@ -49,4 +49,13 @@ mkdir jenkins
 cd jenkins
 wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
 
+# setup cron jobs
+touch cron
+cat > cron <<EOL
+@reboot java -jar /opt/jenkins/jenkins.war --httpPort=9091
+EOL
+chown ec2-user:ec2-user cron
+su ec2-user -c 'crontab cron'
+rm -f cron
+
 java -jar jenkins.war --httpPort=9091

@@ -14,7 +14,7 @@ data "aws_security_group" "WebDMZ" {
 }
 
 resource "aws_instance" "jenkins_master" {
-    ami                         = "ami-0089b31e09ac3fffc" # Amaxon Linux 2 AMI from eu-west-2 region
+    ami                         = var.ami
     count                       = 1
     instance_type               = var.instance_type
     key_name                    = var.key_pair
@@ -31,7 +31,7 @@ resource "aws_instance" "jenkins_master" {
 
 
 resource "aws_instance" "jenkins_slave" {
-    ami                         = "ami-0089b31e09ac3fffc" # Amaxon Linux 2 AMI from eu-west-2 region
+    ami                         = var.ami
     count                       = 2
     instance_type               = var.instance_type
     key_name                    = var.key_pair

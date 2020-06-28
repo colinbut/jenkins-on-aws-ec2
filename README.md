@@ -52,7 +52,7 @@ Requires Ruby to be installed in your installed.
 
 ## Limitations
 
-#### 1. Using default VPC & Security Groups
+#### 1. Using default VPC
 
-As mentioned, for demo purposes i've intentionallly kept this simple. Therefore, I've used the default VPC in a region of my choice (eu-west-2=London). Additionally, I'm reusing a security group i've already got made which has certain ports open to the public (in this case, as indicated above, port 9000).
+As mentioned, for demo purposes i've intentionallly kept this simple. Therefore, I've used the default VPC in a region of my choice (eu-west-2=London).
 
